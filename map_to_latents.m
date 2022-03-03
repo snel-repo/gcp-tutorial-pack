@@ -1,16 +1,19 @@
 import PBT_analysis.*
+
+%% Adding Utils functions to MATLAB path
+
+addpath(genpath('add\path\to\repo'));
 %% Fill in path of lfads_output
 % specify LFADS output directory with posterior sample and average files
 % read the lfads output files (specify the lfads_input_file name to merge
 % training and validation sets from lfads output)
-%lfads_output_dir = 'C:\Users\Diya\Desktop\autoLFADS_analysis\data\runs\lfads_output';
-lfads_output_dir = '/snel/share/share/derived/CaLFADS/runs/sweep_freq_artifacts/tutorial/7Hz/run_002/pbt_best_model';
 
+RADICaL_output_dir = 'add\path\to\RADICaL\output';
 %% Post processing
 lfads_input_file = 'lfads_cal_data.h5';
 data = load('true_latents_synthetic_calcium.mat');
 true_latents = data.truth_lorenz; 
-output_data = read_lfads_output(lfads_output_dir, lfads_input_file);
+output_data = read_lfads_output(RADICaL_output_dir, lfads_input_file);
 
 %% compute predicted rates from inferred ZIG parameters
 % calculate event rates from estimated ZIG parameters
