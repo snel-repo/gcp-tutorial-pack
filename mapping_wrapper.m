@@ -1,4 +1,4 @@
-function [yhat, test_idx, R2_train, R2_test, optimal_alpha, yhat_test, y_test, condition_id_test, w] = mapping_wrapper(X, y, k, test_start_idx, alpha, condition_id)
+function [yhat, test_idx, R2_train, R2_test, yhat_test, y_test, condition_id_test, w] = mapping_wrapper(X, y, k, test_start_idx, alpha, condition_id)
 % Split data into train/test. Use the train set to perform cross-validated ridge alpha sweep. Use the optimal alpha value to train ridge regression on train set and evaluate on test set.
 %
 % INPUTS

@@ -3,7 +3,8 @@ import PBT_analysis.*
 % specify LFADS output directory with posterior sample and average files
 % read the lfads output files (specify the lfads_input_file name to merge
 % training and validation sets from lfads output)
-lfads_output_dir = 'C:\Users\Diya\Desktop\autoLFADS_analysis\data\runs\lfads_output';
+%lfads_output_dir = 'C:\Users\Diya\Desktop\autoLFADS_analysis\data\runs\lfads_output';
+lfads_output_dir = '/snel/share/share/derived/CaLFADS/runs/sweep_freq_artifacts/tutorial/7Hz/run_002/pbt_best_model';
 
 %% Post processing
 lfads_input_file = 'lfads_cal_data.h5';
@@ -13,7 +14,7 @@ output_data = read_lfads_output(lfads_output_dir, lfads_input_file);
 
 %% compute predicted rates from inferred ZIG parameters
 % calculate event rates from estimated ZIG parameters
-zig_params = output_data{1}.rates;
+zig_params = output_data.rates;
 s_min = 0.1;
 timeBase = 30;
 framerate = 1000/timeBase;
@@ -28,13 +29,13 @@ i_k = 1;
 % e.g., if k = 5 and i_k = 1, test trials will be the 1st, 6th, 11th, 16th, 21th ... trials
 
 alpha = 0.01; % A sweep of alpha values is recommended to find the optimal regularization
-[~, test_idx, R2_train, R2_test, ~, yhat_test, y_test, condition_id_test, ~] = mapping_wrapper(lfads_rates, truth_lorenz, k, i_k, alpha_range, condition_id);
+[~, test_idx, R2_train, R2_test, yhat_test, y_test, condition_id_test, ~] = mapping_wrapper(lfads_rates, data.truth_lorenz, k, i_k, alpha, data.condition_id);
 sprintf('Test R2 of true and predicted Lorenz X, Y and Z states are: %0.3f, %0.3f, %0.3f', R2_test)
 
 %% Visualize true and predicted Lorenz states for some conditions
 lowD_names = {'X', 'Y', 'Z'};
 % pick a few conditions to visualize the true vs predicted Lorenz latent states
-conds_to_plot = [1,5,6,7];
+conds_to_plot = [4,6,7,8];
 figure()
 set(gcf, 'Position', [36, 36, 1850, 1050])
 % loop through each Lorenz dimension (i.e., X, Y and Z)
@@ -53,6 +54,7 @@ for i_l = 1:size(y_test, 1)
         % put legend on if this is the first column of panels
         if i_c == 1
             legend(h([end-1, end]), {['Predicted ', lowD_names{i_l}], ['True ', lowD_names{i_l}]})
+            legend('Location', 'best')
             ylabel(['Lorenz ' lowD_names{i_l}])
         end        
         hold off
@@ -64,4 +66,4 @@ for i_l = 1:size(y_test, 1)
         end        
     end
 end
-suptitle('RADICaL, true vs. predicted latent states')
+sgtitle('RADICaL, true vs. predicted latent states')
