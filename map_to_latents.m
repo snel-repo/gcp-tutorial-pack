@@ -35,15 +35,15 @@ sprintf('Test R2 of true and predicted Lorenz X, Y and Z states are: %0.3f, %0.3
 %% Visualize true and predicted Lorenz states for some conditions
 lowD_names = {'X', 'Y', 'Z'};
 % pick a few conditions to visualize the true vs predicted Lorenz latent states
-conds_to_plot = [4,6,7,8];
+conds_to_plot = [6,7,8];
 figure()
-set(gcf, 'Position', [36, 36, 1850, 1050])
+set(gcf, 'Position', [36, 36, 800, 600])
 % loop through each Lorenz dimension (i.e., X, Y and Z)
 for i_l = 1:size(y_test, 1)
     % loop through each condition for plotting
     for i_c = 1:numel(conds_to_plot)
         i_cond = conds_to_plot(i_c);
-        subplot(3,4,i_c+(i_l-1)*4)
+        subplot(3,3,i_c+(i_l-1)*3)
         % find trial indices that belong to the current condition
         trial_idx_this_condition = find(condition_id_test == i_cond);
         % plot predicted latent states
@@ -52,7 +52,7 @@ for i_l = 1:size(y_test, 1)
         % plot true latent states
         h(end+1) = plot(squeeze(y_test(i_l,:,trial_idx_this_condition(1))), 'Color', 'k', 'LineWidth', 2);
         % put legend on if this is the first column of panels
-        if i_c == 1
+        if i_c == 1 && i_l == 1
             legend(h([end-1, end]), {['Predicted ', lowD_names{i_l}], ['True ', lowD_names{i_l}]})
             legend('Location', 'best')
             ylabel(['Lorenz ' lowD_names{i_l}])
