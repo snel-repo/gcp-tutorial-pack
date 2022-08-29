@@ -4,7 +4,7 @@ import PBT_analysis.*
 % read the lfads output files (specify the lfads_input_file name to merge
 % training and validation sets from lfads output)
 %lfads_output_dir = 'C:\Users\Diya\Desktop\autoLFADS_analysis\data\runs\lfads_output';
-lfads_output_dir = '/snel/share/share/derived/CaLFADS/runs/sweep_freq_artifacts/tutorial/7Hz/run_002/pbt_best_model';
+lfads_output_dir = '/path/to/your/run_output'; 
 
 %% Post processing
 lfads_input_file = 'lfads_cal_data.h5';
